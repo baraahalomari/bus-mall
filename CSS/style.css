@@ -1,0 +1,28 @@
+#left-img{
+    height: 400px;
+    width: 400px;
+    margin: 15px;
+}
+#middle{
+    height: 400px;
+    width: 400px;
+    margin: 15px;
+}
+#right{
+    height: 400px;
+    width: 400px;
+    margin: 15px;
+}
+
+P{
+    font-size: 40px;
+    font-weight: bold;
+}
+body{
+    background-color: rgb(255, 204, 204);
+}
+ul li {
+    margin: 10px;
+    padding: 15px;
+    font-size: 30px;
+}

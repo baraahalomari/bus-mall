@@ -9,13 +9,19 @@ let leftImgIndex;
 let middleImgIndex;
 let rightImgIndex;
 
+
+ let namesImg=[];
+ let votesArry=[];
+ let shownArry=[];
+ let imgArry =[];
 function Image(name,source){
     this.name=name;
     this.source=source;
     this.votes=0;
     this.imgRender=0;
-
+  
     Image.allImages.push(this)
+    namesImg.push(this.name);
 }
 
 Image.allImages=[];
@@ -42,7 +48,7 @@ new Image ('water-can' ,'IMG/water-can.jpg');
 new Image ('unicorn' ,'IMG/unicorn.jpg');
 
 
-console.log(Image.allImages);
+//console.log(Image.allImages);
 
 
 function generateRandomIndex (){
@@ -62,6 +68,17 @@ function renderImages (){
         leftImgIndex=generateRandomIndex(); 
         middleImgIndex=generateRandomIndex();
         rightImgIndex=generateRandomIndex();
+        imgArry.push(leftImgIndex,middleImgIndex,rightImgIndex);
+        console.log(imgArry);
+        for (let i = 0; i <imgArry.length; i++) {
+            if (leftImgIndex===imgArry[i] || middleImgIndex===imgArry[i] || rightImgIndex===imgArry[i]){
+                leftImgIndex=generateRandomIndex(); 
+                middleImgIndex=generateRandomIndex();
+                rightImgIndex=generateRandomIndex();
+               // Image.allImages.imgArry.push(leftImgIndex,middleImgIndex,rightImgIndex);
+            }
+            
+        }
    
     }
   
@@ -91,7 +108,11 @@ function handleClick(event){
         let button =document.getElementById('buttun');
         button.addEventListener('click',showingResult);
         button.hidden=false;
-
+        
+        for (let i = 0; i < Image.allImages.length; i++) {
+           votesArry.push(Image.allImages[i].votes);
+           shownArry.push(Image.allImages[i].imgRender);
+        }
 
         function showingResult (){
         let listUser = document.getElementById('user-li');
@@ -106,11 +127,40 @@ function handleClick(event){
         }
         button.removeEventListener('click',showingResult);
         }
+        chart();
         containerElement.removeEventListener('click',handleClick);
         
     }
 }
 
 
+function chart (){
 
+    let ctx = document.getElementById('myChart').getContext('2d');
+    let chart = new Chart (ctx,{
+        type:'bar',
+        data:{
+            labels: namesImg,
+            datasets: [
+                {
+                    labels: 'Images Votes',
+                    data: votesArry,
+                    backgroundColor:[
+                       '#d279a6',
+                    ],
+                    borderWidth:1
+                },
+                {
+                    labels: 'Image Shown',
+                    data: shownArry,
+                    backgroundColor:[
+                        '#73264d'
+                    ],
+                    borderWidth : 1
+                }
+            ]
+        },
+        Options :{}
+    });
+}
 

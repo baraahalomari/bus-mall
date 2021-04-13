@@ -52,16 +52,17 @@ return Math.floor(Math.random()*Image.allImages.length);
 
 function renderImages (){
     leftImgIndex=generateRandomIndex();
+     Image.allImages[leftImgIndex].imgRender++;
     middleImgIndex=generateRandomIndex();
+     Image.allImages[middleImgIndex].imgRender++;
     rightImgIndex=generateRandomIndex();
+     Image.allImages[rightImgIndex].imgRender++;
 
     while (leftImgIndex === middleImgIndex || middleImgIndex === rightImgIndex || leftImgIndex === rightImgIndex){
-        leftImgIndex=generateRandomIndex();
-        Image.allImages[leftImgIndex].imgRender++;
+        leftImgIndex=generateRandomIndex(); 
         middleImgIndex=generateRandomIndex();
-        Image.allImages[middleImgIndex].imgRender++;
         rightImgIndex=generateRandomIndex();
-        Image.allImages[rightImgIndex].imgRender++;
+   
     }
   
     leftImg.src=Image.allImages[leftImgIndex].source;
@@ -87,6 +88,12 @@ function handleClick(event){
             }
             renderImages();
     } else{
+        let button =document.getElementById('buttun');
+        button.addEventListener('click',showingResult);
+        button.hidden=false;
+
+
+        function showingResult (){
         let listUser = document.getElementById('user-li');
         let imageResult;
 
@@ -97,8 +104,10 @@ function handleClick(event){
            imageResult.textContent=`${Image.allImages[i].name} has ${Image.allImages[i].votes} votes, and was seen ${Image.allImages[i].imgRender} times`
             
         }
+        button.removeEventListener('click',showingResult);
+        }
         containerElement.removeEventListener('click',handleClick);
-
+        
     }
 }
 

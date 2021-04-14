@@ -26,3 +26,9 @@ ul li {
     padding: 5px;
     font-size: 30px;
 }
+button{
+    height: 40px;
+    width: 90px;
+    text-align: center;
+    background-color: rgb(158, 25, 219);
+}

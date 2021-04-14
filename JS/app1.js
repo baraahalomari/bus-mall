@@ -64,24 +64,16 @@ function renderImages (){
     rightImgIndex=generateRandomIndex();
      Image.allImages[rightImgIndex].imgRender++;
 
-    while (leftImgIndex === middleImgIndex || middleImgIndex === rightImgIndex || leftImgIndex === rightImgIndex){
+    while (leftImgIndex === middleImgIndex || middleImgIndex === rightImgIndex || leftImgIndex === rightImgIndex || imgArry.includes(leftImgIndex) || imgArry.includes(middleImgIndex) || imgArry.includes(rightImgIndex)){
         leftImgIndex=generateRandomIndex(); 
         middleImgIndex=generateRandomIndex();
         rightImgIndex=generateRandomIndex();
-        imgArry.push(leftImgIndex,middleImgIndex,rightImgIndex);
-        console.log(imgArry);
-        for (let i = 0; i <imgArry.length; i++) {
-            if (leftImgIndex===imgArry[i] || middleImgIndex===imgArry[i] || rightImgIndex===imgArry[i]){
-                leftImgIndex=generateRandomIndex(); 
-                middleImgIndex=generateRandomIndex();
-                rightImgIndex=generateRandomIndex();
-               // Image.allImages.imgArry.push(leftImgIndex,middleImgIndex,rightImgIndex);
-            }
-            
-        }
+        
+        
    
     }
-  
+  imgArry =[];
+  imgArry.push (leftImgIndex,middleImgIndex,rightImgIndex);
     leftImg.src=Image.allImages[leftImgIndex].source;
     middleImg.src=Image.allImages[middleImgIndex].source;
     rightImg.src=Image.allImages[rightImgIndex].source;
@@ -103,6 +95,7 @@ function handleClick(event){
             } else{
                 Image.allImages[rightImgIndex].votes++;
             }
+            updateStorage();
             renderImages();
     } else{
         let button =document.getElementById('buttun');
@@ -132,6 +125,25 @@ function handleClick(event){
         
     }
 }
+
+
+function updateStorage (){
+    let arryString = JSON.stringify(Image.allImages);
+    localStorage.setItem('votes',arryString);
+ 
+}
+
+function getImage (){
+    let data = localStorage.getItem('votes');
+    console.log(data);
+    let imgData =JSON.parse(data);
+    if( imgData !==null ){
+        Image.allImages = imgData
+    }
+}
+
+
+
 
 
 function chart (){
@@ -164,3 +176,4 @@ function chart (){
     });
 }
 
+getImage();
